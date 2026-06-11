@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SuperSexyDropdown demo page with live examples, API controls, and usage patterns." />
+  <title>SuperSexyDropdown Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 32%),
+        radial-gradient(circle at top right, rgba(15, 23, 42, 0.08), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4fb 48%, #e7eef8 100%);
+      color: #0f172a;
+    }
+
+    .display-font {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+    }
+
+    .grid-noise {
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .demo-pane {
+      min-height: 280px;
+    }
+
+    .soft-shadow {
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .data-pill {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .log-line {
+      word-break: break-word;
+    }
+
+    .scrollbar::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.55);
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+      background: rgba(241, 245, 249, 0.9);
+    }
+  </style>
+</head>
+<body class="scrollbar">
+  <header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/75 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-950/20">
+            <span class="display-font text-lg">SD</span>
+          </div>
+          <div>
+            <p class="display-font text-base font-bold tracking-tight text-slate-950">SuperSexyDropdown</p>
+            <p class="text-xs text-slate-500">Vanilla JS dropdown demo and reference</p>
+          </div>
+        </div>
+      </div>
+      <nav class="hidden items-center gap-2 md:flex">
+        <a href="#overview" class="rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900">Overview</a>
+        <a href="#demos" class="rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900">Demos</a>
+        <a href="#api" class="rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900">API</a>
+        <a href="#troubleshooting" class="rounded-full px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900">Troubleshooting</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="relative">
+    <section class="grid-noise relative overflow-hidden">
+      <div class="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 lg:px-8 lg:pb-14 lg:pt-16">
+        <div class="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div class="space-y-6">
+            <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-900 shadow-sm">
+              <span class="h-2 w-2 rounded-full bg-blue-600"></span>
+              Live demo page with real component instances
+            </div>
+            <div class="max-w-3xl space-y-4">
+              <h1 class="display-font text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                A dropdown library that behaves like a product, not a toy.
+              </h1>
+              <p class="max-w-2xl text-lg leading-8 text-slate-600">
+                This page shows single-select, multi-select, native select conversion, runtime mutations, event handling, and keyboard-driven interaction so a new user can understand the library before reading a line of source.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <a href="#demos" class="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5">View demos</a>
+              <a href="#api" class="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-slate-400">Read API</a>
+            </div>
+          </div>
+
+          <div class="glass rounded-[2rem] p-5">
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <div class="rounded-3xl bg-slate-950 p-5 text-white soft-shadow">
+                <p class="text-xs uppercase tracking-[0.28em] text-slate-400">What it does</p>
+                <p class="mt-2 text-2xl font-bold">Search, select, sort, emit events, and let you override behavior.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="data-pill rounded-3xl p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Modes</p>
+                  <p class="mt-2 text-xl font-bold text-slate-950">Single + Multi</p>
+                </div>
+                <div class="data-pill rounded-3xl p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Events</p>
+                  <p class="mt-2 text-xl font-bold text-slate-950">Cancelable</p>
+                </div>
+                <div class="data-pill rounded-3xl p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Styles</p>
+                  <p class="mt-2 text-xl font-bold text-slate-950">Inline</p>
+                </div>
+                <div class="data-pill rounded-3xl p-4">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Upgrade</p>
+                  <p class="mt-2 text-xl font-bold text-slate-950">fromSelect</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="grid gap-4 md:grid-cols-3">
+        <article class="glass rounded-[1.75rem] p-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Selection</p>
+          <h2 class="mt-2 display-font text-2xl font-bold text-slate-950">Built for controlled value flow</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Use `getValue`, `setValue`, `select`, `unselect`, `toggleValue`, and `clear` to drive the widget from code or from user interaction.</p>
+        </article>
+        <article class="glass rounded-[1.75rem] p-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-sky-700">Search</p>
+          <h2 class="mt-2 display-font text-2xl font-bold text-slate-950">Fast search, custom matching</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Search can filter by `view`, `label`, `value`, and `searchText`, or you can replace the matcher entirely.</p>
+        </article>
+        <article class="glass rounded-[1.75rem] p-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">Events</p>
+          <h2 class="mt-2 display-font text-2xl font-bold text-slate-950">Lifecycle hooks everywhere</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Use config events, `onX` aliases, runtime listeners, or DOM events to connect it to the rest of your app.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demos" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Live demos</p>
+          <h2 class="display-font mt-2 text-3xl font-bold tracking-tight text-slate-950">Real examples with real behavior</h2>
+        </div>
+        <p class="max-w-2xl text-sm leading-7 text-slate-600">Each card below demonstrates a distinct usage pattern. Open the menus, search, select, and use the buttons to see the public API in motion.</p>
+      </div>
+
+      <div class="grid gap-6 xl:grid-cols-2">
+        <section class="glass rounded-[2rem] p-6">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Demo 01</p>
+              <h3 class="mt-2 display-font text-2xl font-bold text-slate-950">Single-select with custom summary</h3>
+              <p class="mt-2 text-sm leading-7 text-slate-600">A simple single-choice flow with icon support and a custom summary renderer.</p>
+            </div>
+            <div class="rounded-full bg-blue-50 px-4 py-2 text-xs font-semibold text-blue-800">closeOnSelect defaults to true here</div>
+          </div>
+          <div id="single-demo" class="demo-pane mt-5 rounded-[1.5rem] border border-slate-200 bg-white p-4"></div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button data-action="single-open" class="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white">Open</button>
+            <button data-action="single-clear" class="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Clear</button>
+            <button data-action="single-focus" class="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Focus</button>
+          </div>
+        </section>
+
+        <section class="glass rounded-[2rem] p-6">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.22em] text-violet-700">Demo 02</p>
+              <h3 class="mt-2 display-font text-2xl font-bold text-slate-950">Multi-select with summary overflow</h3>
+              <p class="mt-2 text-sm leading-7 text-slate-600">Shows multi-selection, search, and the default summary overflow behavior.</p>
+            </div>
+            <div class="rounded-full bg-violet-50 px-4 py-2 text-xs font-semibold text-violet-800">closeOnSelect defaults to false here</div>
+          </div>
+          <div id="multi-demo" class="demo-pane mt-5 rounded-[1.5rem] border border-slate-200 bg-white p-4"></div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button data-action="multi-open" class="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white">Open</button>
+            <button data-action="multi-clear" class="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Clear</button>
+            <button data-action="multi-refresh" class="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Refresh</button>
+          </div>
+        </section>
+
+        <section class="glass rounded-[2rem] p-6">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">Demo 03</p>
+              <h3 class="mt-2 display-font text-2xl font-bold text-slate-950">Native select conversion</h3>
+              <p class="mt-2 text-sm leading-7 text-slate-600">A plain `<select>` upgraded with `SuperSexyDropdown.fromSelect(...)` while keeping the underlying control synchronized.</p>
+            </div>
+            <div class="rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-800">source select stays synced</div>
+          </div>
+          <div class="mt-5 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="rounded-[1.5rem] border border-slate-200 bg-white p-4">
+              <label for="country-select" class="mb-2 block text-sm font-semibold text-slate-700">Native select source</label>
+              <select id="country-select" class="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none">
+                <option value="us">United States</option>
+                <option value="in">India</option>
+                <option value="sg">Singapore</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ae">United Arab Emirates</option>
+              </select>
+              <p class="mt-3 text-xs leading-6 text-slate-500">The original select is hidden once converted. Changes made in the custom dropdown are pushed back to this element.</p>
+            </div>
+            <div id="native-demo" class="rounded-[1.5rem] border border-slate-200 bg-white p-4"></div>
+          </div>
+        </section>
+
+        <section class="glass rounded-[2rem] p-6">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.22em] text-amber-700">Demo 04</p>
+              <h3 class="mt-2 display-font text-2xl font-bold text-slate-950">Runtime mutation and event console</h3>
+              <p class="mt-2 text-sm leading-7 text-slate-600">Add and remove options, search programmatically, and inspect emitted events as you interact.</p>
+            </div>
+            <div class="rounded-full bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-800">methods in action</div>
+          </div>
+          <div id="dynamic-demo" class="demo-pane mt-5 rounded-[1.5rem] border border-slate-200 bg-white p-4"></div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <button data-action="dynamic-add" class="rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white">Add option</button>
+            <button data-action="dynamic-remove" class="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Remove option</button>
+            <button data-action="dynamic-search" class="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Search "zen"</button>
+            <button data-action="dynamic-clearsearch" class="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Clear search</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="api" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="glass rounded-[2rem] p-6 lg:p-8">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">API reference</p>
+            <h2 class="display-font mt-2 text-3xl font-bold tracking-tight text-slate-950">How to drive the component from code</h2>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-slate-600">Use these methods in the same order you would in a real application: mount first, then set values, open or close as needed, and refresh after structural updates.</p>
+        </div>
+
+        <div class="mt-8 grid gap-4 lg:grid-cols-3">
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Selection flow</p>
+            <ul class="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+              <li><code>getValue()</code> to read the value</li>
+              <li><code>setValue(...)</code> to replace it</li>
+              <li><code>select(...)</code> or <code>toggleValue(...)</code> for one option</li>
+              <li><code>clear()</code> to empty it</li>
+            </ul>
+          </article>
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Structure flow</p>
+            <ul class="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+              <li><code>setOptions(...)</code> to replace the dataset</li>
+              <li><code>addOption(...)</code> to append one</li>
+              <li><code>removeOption(...)</code> to remove one</li>
+              <li><code>refresh()</code> to repaint after custom changes</li>
+            </ul>
+          </article>
+          <article class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Lifecycle flow</p>
+            <ul class="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+              <li><code>open()</code> and <code>close()</code> for manual control</li>
+              <li><code>disable()</code> and <code>enable()</code> for form states</li>
+              <li><code>focus()</code> for accessibility-driven control</li>
+              <li><code>destroy()</code> when the widget is no longer needed</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="troubleshooting" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="glass rounded-[2rem] p-6 lg:p-8">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Troubleshooting</p>
+        <h2 class="display-font mt-2 text-3xl font-bold tracking-tight text-slate-950">Common mistakes and how to fix them</h2>
+        <div class="mt-6 grid gap-4 lg:grid-cols-2">
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <h3 class="text-lg font-bold text-slate-950">The menu is empty</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600">Check that `options` is an array and that your search term is not filtering everything out.</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <h3 class="text-lg font-bold text-slate-950">Icons are missing</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600">Load the Material Symbols font if you rely on the built-in icon names, or supply custom icon renderers.</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <h3 class="text-lg font-bold text-slate-950">State is out of sync</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600">Use `fromSelect(...)` for native select syncing, or call `setValue(...)` and `refresh()` after programmatic changes.</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5">
+            <h3 class="text-lg font-bold text-slate-950">HTML appears raw</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600">`labelAsHtml` uses `innerHTML`. Only use trusted markup if you enable it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 rounded-[2rem] bg-slate-950 px-6 py-8 text-white shadow-2xl shadow-slate-950/20 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Ready to publish</p>
+          <h2 class="display-font mt-2 text-3xl font-bold">The demo is now showing real behavior, not placeholder marketing copy.</h2>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="#overview" class="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950">Back to top</a>
+          <a href="./README.md" class="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white">Read the docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./src/supersexydropdown.js"></script>
+  <script>
+    (function () {
+      const logLines = [];
+      const logLimit = 14;
+
+      function prettyValue(value) {
+        if (value === null) return "null";
+        if (typeof value === "undefined") return "undefined";
+        try {
+          return JSON.stringify(value);
+        } catch (error) {
+          return String(value);
+        }
+      }
+
+      function createLogPane() {
+        const pane = document.createElement("div");
+        pane.className = "mt-4 rounded-[1.5rem] border border-slate-200 bg-slate-950 p-4 text-slate-100";
+        pane.innerHTML = `
+          <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.24em] text-slate-400">Event console</p>
+              <p class="mt-1 text-sm font-semibold text-white">Live component events appear here</p>
+            </div>
+            <button type="button" data-clear-log class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10">Clear log</button>
+          </div>
+          <div data-log-list class="mt-4 max-h-56 space-y-2 overflow-auto pr-1 text-sm"></div>
+        `;
+        return pane;
+      }
+
+      function writeLog(message) {
+        logLines.unshift(message);
+        while (logLines.length > logLimit) logLines.pop();
+
+        const list = document.querySelector("[data-log-list]");
+        if (!list) return;
+        list.innerHTML = logLines.map((line) => `
+          <div class="log-line rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-slate-200">
+            ${line}
+          </div>
+        `).join("");
+      }
+
+      function wireLogger(instance, label) {
+        const events = [
+          "created", "mounted", "open", "close", "search", "select", "unselect",
+          "change", "clear", "render", "destroy"
+        ];
+
+        events.forEach((eventName) => {
+          instance.on(eventName, (detail) => {
+            writeLog(`<span class="text-slate-400">${label}</span> <span class="font-semibold text-white">${eventName}</span> ${prettyValue(detail.value ?? detail.term ?? detail.previousValue ?? null)}`);
+          });
+        });
+      }
+
+      const singleHost = document.getElementById("single-demo");
+      const multiHost = document.getElementById("multi-demo");
+      const nativeHost = document.getElementById("native-demo");
+      const dynamicHost = document.getElementById("dynamic-demo");
+      const selectEl = document.getElementById("country-select");
+
+      singleHost.appendChild(createLogPane());
+      const singleDropdown = new SuperSexyDropdown({
+        name: "office",
+        placeholder: "Pick one office",
+        options: [
+          { value: "nyc", view: "New York City", icon: "business" },
+          { value: "sfo", view: "San Francisco", icon: "travel_explore" },
+          { value: "blr", view: "Bengaluru", icon: "laptop_mac" },
+          { value: "sin", view: "Singapore", icon: "public" }
+        ],
+        summary: {
+          renderer: ({ selectedOptions }) => selectedOptions.length ? `Chosen: ${selectedOptions[0].view}` : "Pick one office"
+        },
+        events: {
+          beforeOpen: () => writeLog('<span class="text-blue-300">single</span> beforeOpen via config.events')
+        }
+      });
+      singleDropdown.mount(singleHost, { position: "append" });
+      wireLogger(singleDropdown, "single");
+
+      const multiMount = document.createElement("div");
+      multiMount.className = "rounded-[1.5rem] border border-slate-200 bg-white p-4";
+      multiHost.appendChild(multiMount);
+      const multiDropdown = new SuperSexyDropdown({
+        name: "departments",
+        placeholder: "Select departments",
+        multiple: true,
+        closeOnSelect: false,
+        clearSearchOnSelect: true,
+        options: [
+          { value: "design", view: "Design", icon: "brush" },
+          { value: "product", view: "Product", icon: "view_in_ar" },
+          { value: "engineering", view: "Engineering", icon: "code" },
+          { value: "sales", view: "Sales", icon: "sell" },
+          { value: "support", view: "Support", icon: "support_agent" },
+          { value: "finance", view: "Finance", icon: "account_balance" }
+        ],
+        summary: {
+          maxLabels: 2,
+          overflowPrefix: " +"
+        }
+      });
+      multiDropdown.mount(multiMount, { position: "append" });
+      wireLogger(multiDropdown, "multi");
+
+      const nativeDropdown = SuperSexyDropdown.fromSelect(selectEl, {
+        placeholder: "Choose a country",
+        search: {
+          placeholder: "Search countries..."
+        }
+      });
+      nativeDropdown.mount(nativeHost, { position: "append" });
+      wireLogger(nativeDropdown, "native");
+
+      const dynamicDropdown = new SuperSexyDropdown({
+        name: "tags",
+        placeholder: "Try dynamic updates",
+        multiple: true,
+        clearSearchOnClose: true,
+        search: {
+          debounce: 0
+        },
+        options: [
+          { value: "alpha", view: "Alpha", icon: "tag" },
+          { value: "beta", view: "Beta", icon: "label" },
+          { value: "gamma", view: "Gamma", icon: "science" }
+        ]
+      });
+      dynamicDropdown.mount(dynamicHost, { position: "append" });
+      wireLogger(dynamicDropdown, "dynamic");
+
+      document.querySelectorAll("[data-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const action = button.getAttribute("data-action");
+
+          if (action === "single-open") singleDropdown.open();
+          if (action === "single-clear") singleDropdown.clear();
+          if (action === "single-focus") singleDropdown.focus();
+
+          if (action === "multi-open") multiDropdown.open();
+          if (action === "multi-clear") multiDropdown.clear();
+          if (action === "multi-refresh") multiDropdown.refresh();
+
+          if (action === "dynamic-add") {
+            dynamicDropdown.addOption({
+              value: `zen-${Date.now().toString(36).slice(-4)}`,
+              view: "Zen Mode",
+              icon: "flare"
+            });
+            dynamicDropdown.open();
+            writeLog('<span class="text-amber-300">dynamic</span> addOption -> Zen Mode');
+          }
+
+          if (action === "dynamic-remove") {
+            dynamicDropdown.removeOption("gamma");
+            writeLog('<span class="text-amber-300">dynamic</span> removeOption -> gamma');
+          }
+
+          if (action === "dynamic-search") {
+            dynamicDropdown.search("zen");
+            dynamicDropdown.open();
+            writeLog('<span class="text-amber-300">dynamic</span> search -> zen');
+          }
+
+          if (action === "dynamic-clearsearch") {
+            dynamicDropdown.search("");
+            writeLog('<span class="text-amber-300">dynamic</span> search cleared');
+          }
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        const clearLogButton = event.target.closest("[data-clear-log]");
+        if (!clearLogButton) return;
+        logLines.length = 0;
+        writeLog('<span class="text-slate-400">console</span> log cleared');
+      });
+
+      writeLog('<span class="text-slate-400">demo</span> page initialized');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "super-sexy-dropdown",
+  "version": "1.0.0",
+  "description": "A deeply configurable vanilla JavaScript dropdown/select component with inline styles, search, events, and behavior overrides.",
+  "type": "commonjs",
+  "main": "src/supersexydropdown.js",
+  "browser": "src/supersexydropdown.js",
+  "exports": {
+    ".": "./src/supersexydropdown.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oshjain/super-sexy-dropdown.git"
+  },
+  "homepage": "https://github.com/oshjain/super-sexy-dropdown#readme",
+  "bugs": {
+    "url": "https://github.com/oshjain/super-sexy-dropdown/issues"
+  },
+  "author": "Hasmukh Jain",
+  "files": [
+    "src/supersexydropdown.js",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dropdown",
+    "select",
+    "custom-dropdown",
+    "custom-select",
+    "vanilla-js",
+    "multi-select",
+    "single-select",
+    "searchable-dropdown",
+    "accessible-ui",
+    "javascript-ui",
+    "vanilla-javascript",
+    "material-symbols",
+    "inline-styles",
+    "event-driven"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "node -e \"console.log('No automated tests are defined yet.')\""
+  }
+}
